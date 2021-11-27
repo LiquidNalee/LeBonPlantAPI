@@ -17,6 +17,7 @@ from lebonplantapi.adapters.circuit_breakers import (
 )
 from lebonplantapi.adapters.database.models.base import Base
 
+
 engine = create_async_engine(
     settings.sqlalchemy_database_uri,
     pool_size=1,
@@ -50,4 +51,4 @@ def init_db() -> None:
             await conn.execute(text("CREATE SCHEMA IF NOT EXISTS lebonplantapi"))
             await conn.run_sync(Base.metadata.create_all)
 
-    asyncio.create_task(async_init_db())
+    asyncio.get_event_loop().create_task(async_init_db())

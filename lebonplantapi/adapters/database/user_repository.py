@@ -3,15 +3,15 @@ from typing import List, Optional
 from sqlalchemy import select
 
 from lebonplantapi.adapters.database.helpers import db_accessor
-from lebonplantapi.adapters.database.mappers.user import (
+from lebonplantapi.adapters.database.mappers import (
     map_from_user_creation,
     map_to_user_entity,
 )
 from lebonplantapi.adapters.database.models import User
 from lebonplantapi.adapters.database.settings import session
 from lebonplantapi.domain import entities
-from lebonplantapi.domain.ports.user_repository import UserRepositoryPort
-from lebonplantapi.domain.request_models.user import UserCreation
+from lebonplantapi.domain.ports import UserRepositoryPort
+from lebonplantapi.domain.request_models import UserCreation
 
 
 class UserRepository(UserRepositoryPort):

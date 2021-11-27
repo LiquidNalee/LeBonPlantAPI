@@ -1,6 +1,6 @@
 from factory import Factory, Faker
 
-from lebonplantapi.domain.request_models.user import UserCreation
+from lebonplantapi.domain.request_models import UserCreation
 
 
 class UserCreationFactory(Factory):

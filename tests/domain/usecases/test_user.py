@@ -3,12 +3,11 @@ from unittest.mock import Mock, call
 
 import pytest
 
-from lebonplantapi.adapters.database.user_repository import UserRepository
+from lebonplantapi.adapters.database import UserRepository
 from lebonplantapi.domain.errors import UserNotFoundError
-from lebonplantapi.domain.usecases.user.get import GetUser
-from lebonplantapi.domain.usecases.user.list import ListUsers
+from lebonplantapi.domain.usecases import GetUser, ListUsers
 
-from tests.domain.entities.factories.user import UserFactory
+from tests.domain.entities.factories import UserFactory
 
 
 pytestmark = pytest.mark.asyncio
