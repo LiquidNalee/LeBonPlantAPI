@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import ORJSONResponse
 
+from instance import Settings, settings
 from lebonplantapi.adapters.circuit_breakers import circuit_breaker_registry
 from lebonplantapi.controllers.api.schemas.health import (
     PingResponseModel,
     ReadyResponseModel,
     VersionResponseModel,
 )
-from instance import Settings, settings
 
 
 router = APIRouter()

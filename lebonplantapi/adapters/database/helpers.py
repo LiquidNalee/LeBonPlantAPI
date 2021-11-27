@@ -1,6 +1,6 @@
 from typing import Any, Callable
 
-from .settings import session
+from .settings import db_breaker, session
 
 
 def db_accessor(commit: bool = False) -> Callable:
@@ -20,4 +20,4 @@ def db_accessor(commit: bool = False) -> Callable:
 
         return repo_method_wrapper
 
-    return repo_method_decorator
+    return db_breaker(repo_method_decorator)

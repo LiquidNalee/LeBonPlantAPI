@@ -109,7 +109,11 @@ build: ## Builds the docker image associated with the project
 ## run: Locally run the application, e.g. node index.js, python -m myapp, go run myapp etc ...
 .PHONY: run
 run:
-	-docker-compose -p $(APP_NAME) -f ./docker-compose.yml run $(DOCKER_COMPOSE_EXTRA_ENV) --service-ports app  # the dash ignore error code when CTRL-C is pressed
+	-docker-compose -p $(APP_NAME) -f ./docker-compose.yml run $(DOCKER_COMPOSE_EXTRA_ENV) --service-ports app
+
+.PHONY: db
+db:
+	-docker-compose -p $(APP_NAME) -f ./docker-compose.yml up db
 
 .PHONY: shell
 shell:

@@ -4,17 +4,17 @@ from pycircuitbreaker import CircuitBreaker, CircuitBreakerState
 from pydantic import ValidationError
 from pytest_mock import MockerFixture
 
-from lebonplantapi.controllers.api.schemas import ReadyResponseModel
 from instance import settings
+from lebonplantapi.controllers.api.schemas import ReadyResponseModel
 
 
 class TestPing:
     def test_no_cache(self, client: TestClient) -> None:
-        ret = client.get("/lebonplantapi/v1/liveness")
+        ret = client.get("/lebonplantapi/liveness")
         assert ret.headers["Cache-Control"] == "no-cache"
 
     def test_response(self, client: TestClient) -> None:
-        ret = client.get("/lebonplantapi/v1/liveness")
+        ret = client.get("/lebonplantapi/liveness")
 
         assert ret.status_code == 200
         assert ret.json() == {"app": "ok"}
@@ -24,11 +24,11 @@ class TestReady:
     cb_ids = list(ReadyResponseModel.__fields__)
 
     def test_no_cache(self, client: TestClient) -> None:
-        ret = client.get("/lebonplantapi/v1/readiness")
+        ret = client.get("/lebonplantapi/readiness")
         assert ret.headers["Cache-Control"] == "no-cache"
 
     def test_response__db_ok(self, client: TestClient) -> None:
-        ret = client.get("/lebonplantapi/v1/readiness")
+        ret = client.get("/lebonplantapi/readiness")
         content = ret.json()
 
         assert ret.status_code == 200
@@ -45,7 +45,7 @@ class TestReady:
         patched.get_open_circuits.return_value = test_cbreakers
         patched.get_circuits.return_value = test_cbreakers
 
-        ret = client.get("/lebonplantapi/v1/readiness")
+        ret = client.get("/lebonplantapi/readiness")
         content = ret.json()
 
         assert ret.status_code == 500
@@ -64,7 +64,7 @@ class TestReady:
         patched.get_circuits.return_value = []
 
         with pytest.raises(ValidationError):
-            client.get("/lebonplantapi/v1/readiness")
+            client.get("/lebonplantapi/readiness")
 
 
 class TestVersion:
@@ -72,7 +72,7 @@ class TestVersion:
         old_version = settings.application_version
         settings.application_version = "abcdef12"
         try:
-            ret = client.get("/lebonplantapi/v1/version")
+            ret = client.get("/lebonplantapi/version")
 
             assert ret.status_code == 200
             assert ret.json() == {"version": "abcdef12"}
@@ -83,7 +83,7 @@ class TestVersion:
         old_version = settings.application_version
         settings.application_version = ""
         try:
-            ret = client.get("/lebonplantapi/v1/version")
+            ret = client.get("/lebonplantapi/version")
 
             assert ret.status_code == 404
         finally:

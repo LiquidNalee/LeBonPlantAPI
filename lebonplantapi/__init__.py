@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 
-from lebonplantapi import controllers
-from lebonplantapi.logging import configure_logging
 from instance import settings
+from lebonplantapi import controllers
+from lebonplantapi.adapters import database
+from lebonplantapi.logging import configure_logging
 
 
 def create_app(name: str = __name__) -> FastAPI:
@@ -20,4 +21,6 @@ def create_app(name: str = __name__) -> FastAPI:
         configure_logging(settings.log_level)
 
     controllers.init_app(app)
+    database.init_db()
+
     return app

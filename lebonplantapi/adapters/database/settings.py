@@ -1,5 +1,7 @@
+import asyncio
 from asyncio import current_task
 
+from sqlalchemy import text
 from sqlalchemy.exc import DisconnectionError, OperationalError, TimeoutError
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
@@ -8,12 +10,12 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import sessionmaker
 
+from instance import settings
 from lebonplantapi.adapters.circuit_breakers import (
     circuit_breaker_registry,
     init_breaker,
 )
-from instance import settings
-
+from lebonplantapi.adapters.database.models.base import Base
 
 engine = create_async_engine(
     settings.sqlalchemy_database_uri,
@@ -40,3 +42,12 @@ db_breaker = init_breaker(
     breaker_id="db",
     exception_denylist=[DisconnectionError, TimeoutError, OperationalError],
 )
+
+
+def init_db() -> None:
+    async def async_init_db() -> None:
+        async with engine.begin() as conn:
+            await conn.execute(text("CREATE SCHEMA IF NOT EXISTS lebonplantapi"))
+            await conn.run_sync(Base.metadata.create_all)
+
+    asyncio.create_task(async_init_db())

@@ -1,12 +1,4 @@
-from .coordinates import CoordinatesCreationFactory
-from .feedback import FeedbackCreationFactory
-from .realtor import RealtorCreationFactory
-from .sold_property import SoldPropertyCreationFactory
+from .user import UserCreationFactory
 
 
-__all__ = [
-    "CoordinatesCreationFactory",
-    "FeedbackCreationFactory",
-    "RealtorCreationFactory",
-    "SoldPropertyCreationFactory",
-]
+__all__ = ["UserCreationFactory"]
