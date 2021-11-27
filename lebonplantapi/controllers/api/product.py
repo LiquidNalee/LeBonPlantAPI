@@ -51,5 +51,5 @@ async def get_product(product_id: int) -> Product:
 )
 async def save_product(product_creation_request: ProductCreationRequest) -> None:
     """Add a new product."""
-    product_creation = ProductCreation(**product_creation_request.dict())
+    product_creation = ProductCreation.from_request(product_creation_request)
     await SaveProduct(product_repository, product_creation).execute()

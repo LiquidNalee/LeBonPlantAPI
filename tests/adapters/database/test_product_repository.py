@@ -8,6 +8,7 @@ from tests.domain.request_models.factories import ProductCreationFactory
 
 from .factories import ProductFactory, UserFactory
 
+
 pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("db"),

@@ -55,7 +55,7 @@ USER ${USER}
 COPY --chown=${USER_UID}:${USER_GID} --from=prod-deps /home/${USER}/.local /home/${USER}/.local
 ARG APP_NAME
 COPY --chown=${USER_UID}:${USER_GID} ${APP_NAME} ./${APP_NAME}
-COPY --chown=${USER_UID}:${USER_GID} wait-for-postgres.sh rundb.py runserver.py ./
+COPY --chown=${USER_UID}:${USER_GID} wait-for-postgres.sh runserver.py ./
 COPY --chown=${USER_UID}:${USER_GID} instance ./instance
 
 ENTRYPOINT ["run-program"]
@@ -75,6 +75,6 @@ USER ${USER}
 COPY --chown=${USER_UID}:${USER_GID} --from=test-deps /home/${USER}/.local /home/${USER}/.local
 ARG APP_NAME
 COPY --chown=${USER_UID}:${USER_GID} ${APP_NAME} ./${APP_NAME}
-COPY --chown=${USER_UID}:${USER_GID} .editorconfig .flake8 wait-for-postgres.sh rundb.py runserver.py ./
+COPY --chown=${USER_UID}:${USER_GID} .editorconfig .flake8 wait-for-postgres.sh runserver.py ./
 COPY --chown=${USER_UID}:${USER_GID} instance ./instance
 COPY --chown=${USER_UID}:${USER_GID} tests ./tests
