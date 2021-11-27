@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 from lebonplantapi.domain import entities
-from lebonplantapi.domain.request_models.user import UserCreation
+from lebonplantapi.domain.request_models import UserCreation
 
 
 class UserRepositoryPort(ABC):

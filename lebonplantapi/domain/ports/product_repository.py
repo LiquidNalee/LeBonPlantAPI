@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 from lebonplantapi.domain import entities
-from lebonplantapi.domain.request_models.product import ProductCreation
+from lebonplantapi.domain.request_models import ProductCreation
 
 
 class ProductRepositoryPort(ABC):

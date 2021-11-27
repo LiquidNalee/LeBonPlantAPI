@@ -55,7 +55,7 @@ class TestProductController:
         test_product_batch: List[Product],
         mock_get_product: Mock,
     ) -> None:
-        product = test_product_batch[1]
+        product = test_product_batch[0]
         ret = client.get(f"/lebonplantapi/product/{product.id}")
         content = ret.json()
 
@@ -67,9 +67,11 @@ class TestProductController:
         self,
         client: TestClient,
         test_product_batch: List[Product],
+        test_product_batch_ids: List[int],
         mock_get_product: Mock,
     ) -> None:
-        ret = client.get(f"/lebonplantapi/product/{len(test_product_batch) + 4}")
+        max_id = sorted(test_product_batch_ids, reverse=True)[0]
+        ret = client.get(f"/lebonplantapi/product/{max_id + 4}")
 
         assert ret.status_code == 404
 

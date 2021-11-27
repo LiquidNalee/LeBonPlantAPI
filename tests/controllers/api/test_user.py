@@ -64,9 +64,14 @@ class TestUserController:
         assert content["name"] == user.name
 
     def test_get_user__not_found(
-        self, client: TestClient, test_user_batch: List[User], mock_get_user: Mock
+        self,
+        client: TestClient,
+        test_user_batch: List[User],
+        test_user_batch_ids: List[int],
+        mock_get_user: Mock,
     ) -> None:
-        ret = client.get(f"/lebonplantapi/user/{len(test_user_batch) + 4}")
+        max_id = sorted(test_user_batch_ids, reverse=True)[0]
+        ret = client.get(f"/lebonplantapi/user/{max_id + 4}")
 
         assert ret.status_code == 404
 

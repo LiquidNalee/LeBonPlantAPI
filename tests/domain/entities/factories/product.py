@@ -1,9 +1,9 @@
-from factory import Factory, Faker, SubFactory
+from factory import Factory, Faker, Sequence, SubFactory
 from factory.fuzzy import FuzzyChoice
 
 from lebonplantapi.domain.entities import Product, ProductCategory
 
-from tests.domain.entities.factories import UserFactory
+from .user import UserFactory
 
 
 class ProductFactory(Factory):
@@ -12,7 +12,7 @@ class ProductFactory(Factory):
 
     category = FuzzyChoice(list(ProductCategory))
     description = Faker("paragraph")
-    id = Faker("random_int")
+    id = Sequence(int)
     name = Faker("name")
     picture_link = Faker("image_url")
     price = Faker("pyfloat")

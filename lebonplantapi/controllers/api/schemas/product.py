@@ -44,7 +44,7 @@ class ProductCreationRequestCategory(AutoNamedEnum):
     TOOLS = auto()
 
     @classmethod
-    def validate(cls, v: str) -> "ProductResponseModelCategory":
+    def validate(cls, v: str) -> "ProductCreationRequestCategory":
         if not isinstance(v, str):
             raise TypeError("value is not a valid str")
         return cls(v)

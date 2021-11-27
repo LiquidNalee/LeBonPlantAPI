@@ -3,10 +3,9 @@ from unittest.mock import Mock, call
 
 import pytest
 
-from lebonplantapi.adapters.database.product_repository import ProductRepository
+from lebonplantapi.adapters.database import ProductRepository
 from lebonplantapi.domain.errors import ProductNotFoundError
-from lebonplantapi.domain.usecases.product.get import GetProduct
-from lebonplantapi.domain.usecases.product.list import ListProducts
+from lebonplantapi.domain.usecases import GetProduct, ListProducts
 
 from tests.domain.entities.factories import ProductFactory
 

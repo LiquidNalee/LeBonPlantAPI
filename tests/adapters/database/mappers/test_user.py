@@ -1,13 +1,13 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from lebonplantapi.adapters.database.mappers.user import (
+from lebonplantapi.adapters.database.mappers import (
     map_from_user_creation,
     map_to_user_entity,
 )
 
-from tests.domain.entities.factories.user import UserFactory
-from tests.domain.request_models.factories.user import UserCreationFactory
+from tests.adapters.database.factories import UserFactory
+from tests.domain.request_models.factories import UserCreationFactory
 
 
 pytestmark = [
@@ -18,7 +18,7 @@ pytestmark = [
 
 class TestMapToUser:
     def test__ok(self) -> None:
-        user = UserFactory()
+        user = UserFactory.build()
         entity = map_to_user_entity(user)
 
         assert entity is not None

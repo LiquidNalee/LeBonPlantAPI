@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Optional
 
-from lebonplantapi.domain.entities import User
+from .user import User
 
 
 class ProductCategory(Enum):

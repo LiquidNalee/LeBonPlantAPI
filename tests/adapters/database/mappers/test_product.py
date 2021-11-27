@@ -1,13 +1,13 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from lebonplantapi.adapters.database.mappers.user import (
-    map_from_user_creation,
-    map_to_user_entity,
+from lebonplantapi.adapters.database.mappers import (
+    map_from_product_creation,
+    map_to_product_entity,
 )
 
-from tests.domain.entities.factories.user import UserFactory
-from tests.domain.request_models.factories.user import UserCreationFactory
+from tests.adapters.database.factories import ProductFactory, UserFactory
+from tests.domain.request_models.factories import ProductCreationFactory
 
 
 pytestmark = [
@@ -16,24 +16,28 @@ pytestmark = [
 ]
 
 
-class TestMapToUser:
+class TestMapToProduct:
     def test__ok(self) -> None:
-        user = UserFactory()
-        entity = map_to_user_entity(user)
+        product = ProductFactory.build()
+        entity = map_to_product_entity(product)
 
         assert entity is not None
-        assert entity.id == user.id
-        assert entity.name == user.name
+        assert entity.id == product.id
+        assert entity.name == product.name
 
 
-class TestMapFromUserCreation:
+class TestMapFromProductCreation:
     async def test__ok(self, session_autoclose: AsyncSession) -> None:
-        user_creation = UserCreationFactory()
-        user = map_from_user_creation(user_creation)
+        product_creation = ProductCreationFactory()
 
+        product = map_from_product_creation(product_creation)
+
+        user = UserFactory.build(id=product.vendor_id)
         session_autoclose.add(user)
-        await session_autoclose.flush()
-        await session_autoclose.refresh(user)
 
-        assert user is not None
-        assert user.name == user_creation.name
+        session_autoclose.add(product)
+        await session_autoclose.flush()
+        await session_autoclose.refresh(product)
+
+        assert product is not None
+        assert product.name == product_creation.name

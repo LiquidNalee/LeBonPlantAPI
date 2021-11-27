@@ -3,7 +3,7 @@ from lebonplantapi.domain.request_models import ProductCreation
 from lebonplantapi.domain.request_models.product import ProductCreationCategory
 
 from ..models.product import Product, ProductCategory
-from . import map_to_user_entity
+from .user import map_to_user_entity
 
 
 FROM_PRODUCT_CATEGORY_TO_ENTITY = {

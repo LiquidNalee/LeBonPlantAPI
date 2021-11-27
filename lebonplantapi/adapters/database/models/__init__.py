@@ -1,6 +1,7 @@
 from .base import SRID_WGS84
-from .user import User
+from .post import Post
 from .product import Product, ProductCategory
+from .user import User
 
 
 __all__ = [
@@ -8,4 +9,5 @@ __all__ = [
     "User",
     "Product",
     "ProductCategory",
+    "Post",
 ]
