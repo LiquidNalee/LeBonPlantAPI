@@ -6,8 +6,8 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from lebonplantapi import create_app
 from instance import settings
+from lebonplantapi import create_app
 
 
 @pytest.fixture(scope="session")
