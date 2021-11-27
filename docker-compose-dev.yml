@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+
+  app:
+    container_name: lebonplantapi-dev
+    image: "${APP_NAME}:${IMAGE_TAG}-test"
+    volumes:
+      - .:/home/${APP_NAME}/app/
+    depends_on:
+      - db
+    command: python3 runserver.py
+    env_file:
+      - .env_test
+
+  # postgresql 11.9, postgis 3.0.1
+  db:
+    image: "postgis/postgis:11-2.5-alpine"
+    environment:
+      - POSTGRES_PASSWORD=${APP_NAME}_pass
+      - POSTGRES_USER=${APP_NAME}
+      - POSTGRES_DB=${APP_NAME}_test
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U" , "postgres" , "-d", "db"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 15s

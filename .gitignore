@@ -1,0 +1,13 @@
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Coverage files
+coverage.xml
+.coverage*
+junit-coverage.xml
+
+# IDEs
+**/.idea
+.vscode/

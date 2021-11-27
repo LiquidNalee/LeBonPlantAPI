@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  app:
+    image: "${APP_NAME}:latest"
+    volumes:
+      - .:/home/lebonplantapi/app/
+    command: uvicorn --host=0.0.0.0 --port=8000 --log-level=debug --reload runserver:app
+    depends_on:
+      - db
+    environment:
+      - ENV_NAME=${USER}
+    ports:
+      - "8000:8000"
+    env_file:
+      - config.env
+
+  # postgresql 11.9, postgis 3.0.1
+  db:
+    image: "postgis/postgis:11-2.5-alpine"
+    environment:
+      - POSTGRES_PASSWORD=${APP_NAME}_pass
+      - POSTGRES_USER=${APP_NAME}
+      - POSTGRES_DB=${APP_NAME}_test
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U" , "postgres" , "-d", "db"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
